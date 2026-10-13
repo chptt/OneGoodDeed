@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-export default function InfluencerAvatar({ name, imageUrl, size = 'md' }) {
+export default function CampaignAvatar({ name, imageUrl, size = 'md' }) {
   const [imageError, setImageError] = useState(false);
   
   const sizeClasses = {

@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import Link from 'next/link';
 import WalletConnectButton from '@/components/WalletConnectButton';
-import InfluencerAvatar from '@/components/InfluencerAvatar';
-import DonFanLogo from '@/components/DonFanLogo';
+import CampaignAvatar from '@/components/CampaignAvatar';
+import OneGoodDeedLogo from '@/components/OneGoodDeedLogo';
 import { getContract, CHARITY_TYPES, formatEther, CONTRACT_ADDRESS } from '@/lib/contract';
 
 export default function Home() {
@@ -69,19 +69,19 @@ export default function Home() {
 
       for (let i = 0; i < totalNFTs; i++) {
         try {
-          const influencer = await contract.influencers(i);
+          const campaignInfo = await contract.campaigns(i);
           const owner = await contract.ownerOf(i);
           
           campaignData.push({
             tokenId: i,
             owner,
-            charity: CHARITY_TYPES[influencer[0]],
-            totalDonations: parseFloat(formatEther(influencer[1])),
-            goalAmount: parseFloat(formatEther(influencer[2])),
-            active: influencer[3],
-            creator: influencer[4],
-            influencerName: influencer[5] || `${owner.slice(0, 6)}...${owner.slice(-4)}`,
-            profileImageUrl: influencer[6] || '',
+            charity: CHARITY_TYPES[campaignInfo[0]],
+            totalDonations: parseFloat(formatEther(campaignInfo[1])),
+            goalAmount: parseFloat(formatEther(campaignInfo[2])),
+            active: campaignInfo[3],
+            creator: campaignInfo[4],
+            creatorName: campaignInfo[5] || `${owner.slice(0, 6)}...${owner.slice(-4)}`,
+            profileImageUrl: campaignInfo[6] || '',
             isDemo: false
           });
         } catch (error) {
@@ -121,9 +121,9 @@ export default function Home() {
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <DonFanLogo size="md" className="hover:scale-110 transition-transform cursor-pointer" />
+            <OneGoodDeedLogo size="md" className="hover:scale-110 transition-transform cursor-pointer" />
             <h1 className="text-2xl font-bold text-gray-900 hover:text-emerald-600 transition-colors cursor-pointer">
-              DonFan
+              OneGoodDeed
             </h1>
           </div>
           
@@ -169,7 +169,7 @@ export default function Home() {
                 Support Causes That Matter
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                Join influencers and their communities in making a real difference. Every donation is tracked transparently, so you can see exactly how your contribution helps.
+                Join organisations and donors in making a real difference. Every donation is tracked transparently, so you can see exactly how your contribution helps.
               </p>
               
               {!account && (
@@ -259,14 +259,14 @@ export default function Home() {
                     >
                       <div className="p-6">
                         <div className="flex items-center space-x-3 mb-4">
-                          <InfluencerAvatar 
-                            name={campaign.influencerName} 
+                          <CampaignAvatar 
+                            name={campaign.creatorName} 
                             imageUrl={campaign.profileImageUrl}
                             size="md"
                           />
                           <div className="flex-1 min-w-0">
                             <h3 className="text-lg font-semibold text-gray-900 truncate">
-                              {campaign.influencerName}
+                              {campaign.creatorName}
                             </h3>
                             <p className="text-xs text-gray-500 font-mono truncate">
                               {campaign.owner.slice(0, 10)}...{campaign.owner.slice(-8)}
@@ -379,7 +379,7 @@ export default function Home() {
                   </div>
                 </div>
                 <h4 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">Choose a Campaign</h4>
-                <p className="text-gray-600">Browse campaigns from influencers supporting causes like housing, meals, medical aid, education, and environmental cleanup.</p>
+                <p className="text-gray-600">Browse campaigns from organisations supporting causes like housing, meals, medical aid, education, and environmental cleanup.</p>
               </div>
               <div className="text-center group cursor-pointer transform transition-all duration-300 hover:scale-105">
                 <div className="relative mb-6">
@@ -466,25 +466,25 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div>
                 <div className="flex items-center space-x-2 mb-4">
-                  <DonFanLogo size="sm" />
-                  <span className="text-xl font-bold text-gray-900">DonFan</span>
+                  <OneGoodDeedLogo size="sm" />
+                  <span className="text-xl font-bold text-gray-900">OneGoodDeed</span>
                 </div>
                 <p className="text-gray-600 text-sm">
-                  Connecting generous donors with influencers making a positive impact in their communities.
+                  Connecting generous donors with verified organisations making a positive impact in their communities.
                 </p>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-4">Causes We Support</h4>
                 <ul className="space-y-2 text-sm text-gray-600">
-                  <li>🏠 Housing & Shelter</li>
-                  <li>🍲 Food & Nutrition</li>
+                  <li>🏠 Housing &amp; Shelter</li>
+                  <li>🍲 Food &amp; Nutrition</li>
                   <li>🏥 Medical Aid</li>
                   <li>📚 Education</li>
                   <li>🌊 Environmental Cleanup</li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-4">Why DonFan?</h4>
+                <h4 className="font-semibold text-gray-900 mb-4">Why OneGoodDeed?</h4>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li>✓ Transparent tracking</li>
                   <li>✓ Direct to cause</li>
@@ -494,7 +494,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
-              <p>© 2024 DonFan. Making charitable giving transparent and impactful.</p>
+              <p>© 2024 OneGoodDeed. Making charitable giving transparent and impactful.</p>
             </div>
           </div>
         </footer>
@@ -502,4 +502,3 @@ export default function Home() {
     </div>
   );
 }
-

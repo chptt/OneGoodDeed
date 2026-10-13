@@ -4,43 +4,43 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract InfluencerDonationNFT is ERC721, ReentrancyGuard {
+contract OrganisationDonationNFT is ERC721, ReentrancyGuard {
     enum CharityType { Housing, Meals, Medical, Education, Equipment, RiverCleaning }
     
-    struct InfluencerData {
+    struct CampaignData {
         CharityType charity;
         uint256 totalDonations;
         uint256 goalAmount;
         bool active;
         address creator;
-        string influencerName;
+        string creatorName;
         string profileImageUrl;
     }
     
     uint256 private _tokenIdCounter;
-    mapping(uint256 => InfluencerData) public influencers;
+    mapping(uint256 => CampaignData) public campaigns;
     
-    event NFTMinted(address indexed influencer, uint256 indexed tokenId, CharityType charity, uint256 goalAmount);
+    event NFTMinted(address indexed creator, uint256 indexed tokenId, CharityType charity, uint256 goalAmount);
     event DonationReceived(uint256 indexed tokenId, address indexed donor, uint256 amount);
-    event Withdrawn(uint256 indexed tokenId, address indexed influencer, uint256 amount);
+    event Withdrawn(uint256 indexed tokenId, address indexed creator, uint256 amount);
     
-    constructor() ERC721("InfluencerDonationNFT", "IDNFT") {}
+    constructor() ERC721("OrganisationDonationNFT", "ODNFT") {}
     
-    function mintMyNFT(CharityType _charity, uint256 _goalAmount, string memory _influencerName, string memory _profileImageUrl) external {
+    function mintMyNFT(CharityType _charity, uint256 _goalAmount, string memory _creatorName, string memory _profileImageUrl) external {
         require(_goalAmount > 0, "Goal must be greater than 0");
-        require(bytes(_influencerName).length > 0, "Name cannot be empty");
-        require(bytes(_influencerName).length <= 50, "Name too long");
+        require(bytes(_creatorName).length > 0, "Name cannot be empty");
+        require(bytes(_creatorName).length <= 50, "Name too long");
         
         uint256 tokenId = _tokenIdCounter++;
         _safeMint(msg.sender, tokenId);
         
-        influencers[tokenId] = InfluencerData({
+        campaigns[tokenId] = CampaignData({
             charity: _charity,
             totalDonations: 0,
             goalAmount: _goalAmount,
             active: true,
             creator: msg.sender,
-            influencerName: _influencerName,
+            creatorName: _creatorName,
             profileImageUrl: _profileImageUrl
         });
         
@@ -50,19 +50,19 @@ contract InfluencerDonationNFT is ERC721, ReentrancyGuard {
     function donate(uint256 tokenId) external payable nonReentrant {
         require(_exists(tokenId), "NFT does not exist");
         require(msg.value > 0, "Donation must be greater than 0");
-        require(influencers[tokenId].active, "Campaign not active");
+        require(campaigns[tokenId].active, "Campaign not active");
         
-        influencers[tokenId].totalDonations += msg.value;
+        campaigns[tokenId].totalDonations += msg.value;
         
         emit DonationReceived(tokenId, msg.sender, msg.value);
     }
     
     function withdraw(uint256 tokenId) external nonReentrant {
         require(ownerOf(tokenId) == msg.sender, "Not NFT owner");
-        require(influencers[tokenId].totalDonations > 0, "No funds to withdraw");
+        require(campaigns[tokenId].totalDonations > 0, "No funds to withdraw");
         
-        uint256 amount = influencers[tokenId].totalDonations;
-        influencers[tokenId].totalDonations = 0;
+        uint256 amount = campaigns[tokenId].totalDonations;
+        campaigns[tokenId].totalDonations = 0;
         
         (bool success, ) = payable(msg.sender).call{value: amount}("");
         require(success, "Withdrawal failed");
@@ -72,12 +72,12 @@ contract InfluencerDonationNFT is ERC721, ReentrancyGuard {
     
     function getCharityType(uint256 tokenId) external view returns (CharityType) {
         require(_exists(tokenId), "NFT does not exist");
-        return influencers[tokenId].charity;
+        return campaigns[tokenId].charity;
     }
     
     function getTotalDonations(uint256 tokenId) external view returns (uint256) {
         require(_exists(tokenId), "NFT does not exist");
-        return influencers[tokenId].totalDonations;
+        return campaigns[tokenId].totalDonations;
     }
     
     function _exists(uint256 tokenId) internal view returns (bool) {
@@ -94,22 +94,22 @@ contract InfluencerDonationNFT is ERC721, ReentrancyGuard {
         
         // First, count how many campaigns this creator has
         for (uint256 i = 0; i < _tokenIdCounter; i++) {
-            if (influencers[i].creator == creator) {
+            if (campaigns[i].creator == creator) {
                 count++;
             }
         }
         
         // Create array and populate it
-        uint256[] memory campaigns = new uint256[](count);
+        uint256[] memory campaignIds = new uint256[](count);
         uint256 index = 0;
         
         for (uint256 i = 0; i < _tokenIdCounter; i++) {
-            if (influencers[i].creator == creator) {
-                campaigns[index] = i;
+            if (campaigns[i].creator == creator) {
+                campaignIds[index] = i;
                 index++;
             }
         }
         
-        return campaigns;
+        return campaignIds;
     }
 }

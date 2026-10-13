@@ -20,10 +20,10 @@ export default function MyContributions() {
             <Link href="/">
               <div className="flex items-center space-x-2 cursor-pointer group">
                 <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center group-hover:bg-emerald-700 transition-colors shadow-lg">
-                  <span className="text-white font-bold text-xl">D</span>
+                  <span className="text-white font-bold text-xl">O</span>
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">
-                  DonFan
+                  OneGoodDeed
                 </h1>
               </div>
             </Link>
@@ -58,10 +58,10 @@ export default function MyContributions() {
           <Link href="/">
             <div className="flex items-center space-x-2 cursor-pointer group">
               <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center group-hover:bg-emerald-700 transition-colors shadow-lg">
-                <span className="text-white font-bold text-xl">D</span>
+                <span className="text-white font-bold text-xl">O</span>
               </div>
               <h1 className="text-2xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">
-                DonFan
+                OneGoodDeed
               </h1>
             </div>
           </Link>
@@ -126,4 +126,3 @@ export default function MyContributions() {
     </div>
   );
 }
-

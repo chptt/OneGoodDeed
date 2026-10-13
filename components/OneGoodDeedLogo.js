@@ -1,6 +1,6 @@
 'use client';
 
-export default function DonFanLogo({ size = 'md', className = '' }) {
+export default function OneGoodDeedLogo({ size = 'md', className = '' }) {
   const sizes = {
     sm: 'w-8 h-8',
     md: 'w-10 h-10',

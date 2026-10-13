@@ -11,8 +11,8 @@ import MealsVisual from '@/components/CharityVisual/MealsVisual';
 import MedicalVisual from '@/components/CharityVisual/MedicalVisual';
 import EducationVisual from '@/components/CharityVisual/EducationVisual';
 import RiverVisual from '@/components/CharityVisual/RiverVisual';
-import InfluencerAvatar from '@/components/InfluencerAvatar';
-import DonFanLogo from '@/components/DonFanLogo';
+import CampaignAvatar from '@/components/CampaignAvatar';
+import OneGoodDeedLogo from '@/components/OneGoodDeedLogo';
 import { getContract, CHARITY_TYPES, formatEther } from '@/lib/contract';
 
 export default function CampaignPage() {
@@ -39,26 +39,26 @@ export default function CampaignPage() {
       } else if (typeof window !== 'undefined' && window.ethereum) {
         tempProvider = new ethers.BrowserProvider(window.ethereum);
       } else {
-        // Fallback: Use Cloudflare's public Ethereum gateway
+        // Fallback: Use public Ethereum gateway
         tempProvider = new ethers.JsonRpcProvider('https://ethereum-sepolia.publicnode.com');
       }
       
       const contract = getContract(tempProvider);
       
-      const influencer = await contract.influencers(tokenId);
+      const campaignInfo = await contract.campaigns(tokenId);
       const owner = await contract.ownerOf(tokenId);
       
-      // New contract returns: [charity, totalDonations, goalAmount, active, creator, influencerName, profileImageUrl]
+      // Contract returns: [charity, totalDonations, goalAmount, active, creator, creatorName, profileImageUrl]
       setCampaign({
         tokenId,
         owner,
-        charity: CHARITY_TYPES[influencer[0]], // charity is index 0
-        totalDonations: parseFloat(formatEther(influencer[1])), // totalDonations is index 1
-        goalAmount: parseFloat(formatEther(influencer[2])), // goalAmount is index 2
-        active: influencer[3], // active is index 3
-        creator: influencer[4], // creator is index 4
-        influencerName: influencer[5] || `${owner.slice(0, 6)}...${owner.slice(-4)}`, // influencerName is index 5
-        profileImageUrl: influencer[6] || '' // profileImageUrl is index 6
+        charity: CHARITY_TYPES[campaignInfo[0]], // charity is index 0
+        totalDonations: parseFloat(formatEther(campaignInfo[1])), // totalDonations is index 1
+        goalAmount: parseFloat(formatEther(campaignInfo[2])), // goalAmount is index 2
+        active: campaignInfo[3], // active is index 3
+        creator: campaignInfo[4], // creator is index 4
+        creatorName: campaignInfo[5] || `${owner.slice(0, 6)}...${owner.slice(-4)}`, // creatorName is index 5
+        profileImageUrl: campaignInfo[6] || '' // profileImageUrl is index 6
       });
     } catch (error) {
       console.error('Error loading campaign:', error);
@@ -135,9 +135,9 @@ export default function CampaignPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center space-x-2 cursor-pointer group">
-              <DonFanLogo size="md" className="group-hover:scale-110 transition-transform" />
+              <OneGoodDeedLogo size="md" className="group-hover:scale-110 transition-transform" />
               <h1 className="text-2xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">
-                DonFan
+                OneGoodDeed
               </h1>
             </div>
           </Link>
@@ -154,16 +154,16 @@ export default function CampaignPage() {
           {/* Left Column - Campaign Info */}
           <div className="space-y-6">
             <div className="bg-white/90 backdrop-blur-sm rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-              {/* Influencer Info */}
+              {/* Creator Info */}
               <div className="flex items-center space-x-4 mb-6 pb-6 border-b border-gray-200">
-                <InfluencerAvatar 
-                  name={campaign.influencerName} 
+                <CampaignAvatar 
+                  name={campaign.creatorName} 
                   imageUrl={campaign.profileImageUrl}
                   size="lg"
                 />
                 <div className="flex-1 min-w-0">
                   <h3 className="text-xl font-bold text-gray-900 mb-1">
-                    {campaign.influencerName}
+                    {campaign.creatorName}
                   </h3>
                   <p className="text-sm text-gray-500 font-mono truncate">
                     {campaign.owner}

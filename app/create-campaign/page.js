@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ethers } from 'ethers';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -20,15 +20,9 @@ export default function CreateCampaign() {
   const [formData, setFormData] = useState({
     charityType: '0',
     goalAmount: '',
-    influencerName: '',
+    creatorName: '',
     profileImageUrl: ''
   });
-
-  useEffect(() => {
-    if (provider && account) {
-      // No need to check for existing NFT anymore
-    }
-  }, [provider, account]);
 
   const handleWalletConnect = (p, s, a) => {
     setProvider(p);
@@ -94,12 +88,12 @@ export default function CreateCampaign() {
       return;
     }
 
-    if (!formData.influencerName || formData.influencerName.trim().length === 0) {
-      alert('Please enter your name or influencer name');
+    if (!formData.creatorName || formData.creatorName.trim().length === 0) {
+      alert('Please enter your name or campaign creator name');
       return;
     }
 
-    if (formData.influencerName.length > 50) {
+    if (formData.creatorName.length > 50) {
       alert('Name is too long (max 50 characters)');
       return;
     }
@@ -112,7 +106,7 @@ export default function CreateCampaign() {
       const tx = await contractWithSigner.mintMyNFT(
         parseInt(formData.charityType),
         parseEther(formData.goalAmount),
-        formData.influencerName.trim(),
+        formData.creatorName.trim(),
         formData.profileImageUrl.trim()
       );
 
@@ -144,10 +138,10 @@ export default function CreateCampaign() {
           <Link href="/">
             <div className="flex items-center space-x-2 cursor-pointer group">
               <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center group-hover:bg-emerald-700 transition-colors shadow-lg">
-                <span className="text-white font-bold text-xl">D</span>
+                <span className="text-white font-bold text-xl">O</span>
               </div>
               <h1 className="text-2xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">
-                DonFan
+                OneGoodDeed
               </h1>
             </div>
           </Link>
@@ -182,28 +176,14 @@ export default function CreateCampaign() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Campaign Name
+                <label htmlFor="creatorName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Your Name / Campaign Creator Name
                 </label>
                 <input
                   type="text"
-                  name="campaignName"
-                  value={formData.campaignName}
-                  onChange={handleInputChange}
-                  placeholder="My Charity Campaign"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="influencerName" className="block text-sm font-medium text-gray-700 mb-2">
-                  Your Name / Influencer Name
-                </label>
-                <input
-                  type="text"
-                  id="influencerName"
-                  name="influencerName"
-                  value={formData.influencerName}
+                  id="creatorName"
+                  name="creatorName"
+                  value={formData.creatorName}
                   onChange={handleInputChange}
                   maxLength="50"
                   placeholder="Enter your name (e.g., John Doe, @username)"
@@ -348,7 +328,7 @@ export default function CreateCampaign() {
 
               <button
                 onClick={handleCreateCampaign}
-                disabled={loading || !formData.goalAmount || !formData.influencerName}
+                disabled={loading || !formData.goalAmount || !formData.creatorName}
                 className="w-full px-6 py-4 bg-emerald-600 text-white rounded-lg font-bold text-lg hover:bg-emerald-700 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {loading ? 'Creating Campaign...' : 'Create Campaign 🚀'}
@@ -360,4 +340,3 @@ export default function CreateCampaign() {
     </div>
   );
 }
-

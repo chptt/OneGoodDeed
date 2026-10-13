@@ -1,11 +1,11 @@
-# DonFan - Web3 Donation Platform
+# OneGoodDeed — Transparent Donation Platform
 
-![DonFan Logo](https://img.shields.io/badge/DonFan-Web3%20Donations-10B981?style=for-the-badge)
+![OneGoodDeed](https://img.shields.io/badge/OneGoodDeed-Transparent%20Donations-10B981?style=for-the-badge)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black?style=flat-square&logo=next.js)
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.20-363636?style=flat-square&logo=solidity)
 ![Ethereum](https://img.shields.io/badge/Ethereum-Sepolia-3C3C3D?style=flat-square&logo=ethereum)
 
-A transparent Web3 donation platform connecting influencers with their communities to support charitable causes. Built on Ethereum blockchain with NFT-based campaign tracking.
+A transparent Web3 donation platform connecting verified organisations with donors to support charitable causes. Built on Ethereum blockchain with NFT-based campaign tracking.
 
 ## 🌟 Features
 
@@ -17,10 +17,10 @@ A transparent Web3 donation platform connecting influencers with their communiti
 - **Mobile Support** - Full MetaMask mobile wallet integration
 
 ### For Campaign Creators
-- **Create Campaigns** - Launch unlimited campaigns for different causes
+- **Create Campaigns** - Launch campaigns for different causes
 - **Multiple Charity Types** - Support Housing, Meals, Medical, Education, Equipment, and River Cleaning
 - **NFT Certificates** - Each campaign is an NFT with tamper-proof data
-- **Profile Customization** - Add your name and profile picture
+- **Profile Customisation** - Add your name and profile picture
 - **Dashboard Analytics** - Track donations, donors, and campaign progress
 - **Withdraw Funds** - Securely withdraw donations anytime
 
@@ -28,12 +28,12 @@ A transparent Web3 donation platform connecting influencers with their communiti
 - **Smart Contract** - Solidity-based ERC721 NFT contract
 - **Web3 Integration** - Ethers.js for blockchain interactions
 - **Responsive Design** - Works on desktop and mobile devices
-- **Animated Visuals** - Interactive charity progress visualizations
+- **Animated Visuals** - Interactive charity progress visualisations
 - **Multiple RPC Fallbacks** - Reliable connection to Ethereum network
 
 ## 🚀 Live Demo
 
-Visit the live application: [https://don-fan.vercel.app](https://don-fan.vercel.app)
+Visit the live application: [https://onegooddeed.vercel.app](https://onegooddeed.vercel.app)
 
 ## 📋 Prerequisites
 
@@ -49,8 +49,8 @@ Before you begin, ensure you have:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/chptt/DonFan.git
-cd DonFan
+git clone https://github.com/your-org/onegooddeed.git
+cd onegooddeed
 ```
 
 ### 2. Install Dependencies
@@ -61,10 +61,8 @@ npm install
 
 ### 3. Configure Environment Variables
 
-Create a `.env.local` file in the root directory:
-
 ```bash
-cp .env.local.example .env.local
+cp .env.example .env.local
 ```
 
 Edit `.env.local` and add your contract address:
@@ -79,8 +77,8 @@ NEXT_PUBLIC_SEPOLIA_CHAIN_ID=11155111
 #### Option A: Using Remix IDE (Recommended)
 
 1. Go to [Remix IDE](https://remix.ethereum.org/)
-2. Create a new file: `InfluencerDonationNFT.sol`
-3. Copy the contract from `contracts/InfluencerDonationNFT.sol`
+2. Create a new file: `OrganisationDonationNFT.sol`
+3. Copy the contract from `contracts/OrganisationDonationNFT.sol`
 4. Compile with Solidity 0.8.20
 5. Deploy to Sepolia testnet using MetaMask
 6. Copy the deployed contract address
@@ -88,7 +86,6 @@ NEXT_PUBLIC_SEPOLIA_CHAIN_ID=11155111
 #### Option B: Using Hardhat
 
 ```bash
-npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox
 npx hardhat compile
 npx hardhat run scripts/deploy.js --network sepolia
 ```
@@ -117,9 +114,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
    - [iOS App Store](https://apps.apple.com/app/metamask/id1438144202)
    - [Google Play Store](https://play.google.com/store/apps/details?id=io.metamask)
 
-2. **Access DonFan**
+2. **Access OneGoodDeed**
    - Open your mobile browser
-   - Visit the DonFan website
+   - Visit the OneGoodDeed website
    - Click "Connect Wallet"
    - App will automatically open MetaMask
 
@@ -131,7 +128,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 🏗️ Project Structure
 
 ```
-DonFan/
+onegooddeed/
 ├── app/                          # Next.js 14 app directory
 │   ├── page.js                   # Home page with campaign list
 │   ├── create-campaign/          # Campaign creation page
@@ -141,7 +138,7 @@ DonFan/
 │   ├── layout.js                 # Root layout with animations
 │   └── globals.css               # Global styles
 ├── components/                   # React components
-│   ├── CharityVisual/            # Animated charity visualizations
+│   ├── CharityVisual/            # Animated charity visualisations
 │   │   ├── HousingVisual.js
 │   │   ├── MealsVisual.js
 │   │   ├── MedicalVisual.js
@@ -150,15 +147,15 @@ DonFan/
 │   ├── DonationPanel.js          # Donation interface
 │   ├── ProgressStats.js          # Campaign statistics
 │   ├── WalletConnectButton.js    # Wallet connection
-│   ├── InfluencerAvatar.js       # Profile picture display
-│   └── DonFanLogo.js             # Brand logo
+│   ├── CampaignAvatar.js         # Profile picture display
+│   └── OneGoodDeedLogo.js        # Brand logo
 ├── contracts/                    # Smart contracts
-│   └── InfluencerDonationNFT.sol # Main NFT contract
+│   └── OrganisationDonationNFT.sol  # Main NFT contract
 ├── lib/                          # Utilities
 │   └── contract.js               # Contract ABI and helpers
 ├── scripts/                      # Deployment scripts
 │   └── deploy.js                 # Hardhat deployment
-├── .env.local.example            # Environment template
+├── .env.example                  # Environment template
 ├── DEPLOYMENT.md                 # Deployment guide
 └── README.md                     # This file
 ```
@@ -167,6 +164,8 @@ DonFan/
 
 ### Contract Details
 
+- **Name**: `OrganisationDonationNFT`
+- **Token Symbol**: `ODNFT`
 - **Network**: Ethereum Sepolia Testnet
 - **Standard**: ERC721 (NFT)
 - **Compiler**: Solidity 0.8.20
@@ -179,7 +178,7 @@ DonFan/
 function mintMyNFT(
     CharityType _charity,
     uint256 _goalAmount,
-    string memory _influencerName,
+    string memory _creatorName,
     string memory _profileImageUrl
 ) external
 
@@ -190,7 +189,7 @@ function donate(uint256 tokenId) external payable
 function withdraw(uint256 tokenId) external
 
 // Get campaign details
-function influencers(uint256 tokenId) external view returns (...)
+function campaigns(uint256 tokenId) external view returns (...)
 
 // Get campaigns by creator
 function getCampaignsByCreator(address creator) external view returns (uint256[])
@@ -223,7 +222,7 @@ function getCampaignsByCreator(address creator) external view returns (uint256[]
 ### Deployment
 - **Vercel** - Frontend hosting
 - **Remix IDE** - Contract deployment
-- **IPFS** (optional) - Decentralized storage for images
+- **IPFS** (optional) - Decentralised storage for images
 
 ## 🚢 Deployment
 
@@ -232,7 +231,7 @@ function getCampaignsByCreator(address creator) external view returns (uint256[]
 1. **Push to GitHub**
    ```bash
    git add .
-   git commit -m "Ready for deployment"
+   git commit -m "Initial OneGoodDeed release"
    git push origin main
    ```
 
@@ -317,8 +316,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Get Help
 
 - **Documentation**: Check [DEPLOYMENT.md](./DEPLOYMENT.md)
-- **Issues**: [GitHub Issues](https://github.com/chptt/DonFan/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/chptt/DonFan/discussions)
+- **Issues**: [GitHub Issues](https://github.com/your-org/onegooddeed/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/your-org/onegooddeed/discussions)
 
 ### Common Issues
 
@@ -339,15 +338,8 @@ A: Check you have enough ETH for gas fees and the campaign is active.
 - [TailwindCSS](https://tailwindcss.com/) - CSS framework
 - [Vercel](https://vercel.com/) - Hosting platform
 
-## 📈 Stats
-
-![GitHub stars](https://img.shields.io/github/stars/chptt/DonFan?style=social)
-![GitHub forks](https://img.shields.io/github/forks/chptt/DonFan?style=social)
-![GitHub issues](https://img.shields.io/github/issues/chptt/DonFan)
-![GitHub license](https://img.shields.io/github/license/chptt/DonFan)
-
 ---
 
 Made with ❤️ for transparent charitable giving
 
-**DonFan** - Making a Difference Together 🌟
+**OneGoodDeed** - Making a Difference Together 🌟

@@ -9,8 +9,8 @@
 
 ### Step 1: Prepare the Contract
 1. Go to https://remix.ethereum.org/
-2. Create a new file: `InfluencerDonationNFT.sol`
-3. Copy the entire content from `contracts/InfluencerDonationNFT.sol`
+2. Create a new file: `OrganisationDonationNFT.sol`
+3. Copy the entire content from `contracts/OrganisationDonationNFT.sol`
 4. Paste it into Remix
 
 ### Step 2: Install Dependencies
@@ -21,14 +21,14 @@ The contract uses OpenZeppelin. In Remix:
 ### Step 3: Compile
 1. Go to "Solidity Compiler" tab (left sidebar)
 2. Select compiler version: `0.8.20`
-3. Click "Compile InfluencerDonationNFT.sol"
+3. Click "Compile OrganisationDonationNFT.sol"
 4. Ensure no errors
 
 ### Step 4: Deploy
 1. Go to "Deploy & Run Transactions" tab
 2. Environment: Select "Injected Provider - MetaMask"
 3. MetaMask will popup - make sure you're on Sepolia network
-4. Contract: Select "InfluencerDonationNFT"
+4. Contract: Select "OrganisationDonationNFT"
 5. Click "Deploy" (orange button)
 6. Confirm transaction in MetaMask
 7. Wait for confirmation
@@ -58,65 +58,51 @@ npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox
 npm install @openzeppelin/contracts
 ```
 
-### Step 2: Initialize Hardhat
-```bash
-npx hardhat init
-# Select "Create a JavaScript project"
-```
-
-### Step 3: Configure Hardhat
-Create `hardhat.config.js`:
+### Step 2: Configure Hardhat
+Create or update `hardhat.config.js`:
 ```javascript
 require("@nomicfoundation/hardhat-toolbox");
 
-const SEPOLIA_RPC_URL = "https://sepolia.infura.io/v3/YOUR_INFURA_KEY";
-const PRIVATE_KEY = "YOUR_WALLET_PRIVATE_KEY"; // NEVER commit this!
+const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL || "";
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 
 module.exports = {
   solidity: "0.8.20",
   networks: {
     sepolia: {
       url: SEPOLIA_RPC_URL,
-      accounts: [PRIVATE_KEY],
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
       chainId: 11155111,
     },
   },
 };
 ```
 
-### Step 4: Create Deploy Script
-Create `scripts/deploy.js`:
-```javascript
-const hre = require("hardhat");
-
-async function main() {
-  const InfluencerDonationNFT = await hre.ethers.getContractFactory("InfluencerDonationNFT");
-  const contract = await InfluencerDonationNFT.deploy();
-  await contract.deployed();
-
-  console.log("InfluencerDonationNFT deployed to:", contract.address);
-}
-
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+### Step 3: Set Environment Variables
+Copy `.env.example` to `.env.local` and fill in:
+```env
+SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_KEY
+PRIVATE_KEY=your_wallet_private_key_without_0x_prefix
 ```
 
-### Step 5: Deploy
+### Step 4: Compile and Deploy
 ```bash
+npx hardhat compile
 npx hardhat run scripts/deploy.js --network sepolia
 ```
 
-### Step 6: Update .env.local
-Copy the deployed address and update `.env.local`
+### Step 5: Update .env.local
+Copy the deployed address and update `.env.local`:
+```env
+NEXT_PUBLIC_CONTRACT_ADDRESS=0xYourDeployedAddressHere
+```
 
 ## Verification
 
 After deployment, verify your contract works:
 1. Go to https://sepolia.etherscan.io/
 2. Search for your contract address
-3. You should see the contract and transactions
+3. You should see the `OrganisationDonationNFT` contract and transactions
 
 ## Get Sepolia ETH
 

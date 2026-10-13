@@ -1,0 +1,40 @@
+# OneGoodDeed Migration — Coder Summary
+
+## What Was Changed
+
+### Files Created (renamed from old names)
+- components/OneGoodDeedLogo.js  (from components/DonFanLogo.js)
+- components/CampaignAvatar.js   (from components/InfluencerAvatar.js)
+- contracts/OrganisationDonationNFT.sol  (from contracts/InfluencerDonationNFT.sol)
+- .env.example                   (new)
+
+### Files Deleted
+- components/DonFanLogo.js
+- components/InfluencerAvatar.js
+- contracts/InfluencerDonationNFT.sol
+
+### Files Modified
+- app/layout.js          — title/description updated (DonFan ? OneGoodDeed, influencer ? organisations)
+- app/page.js            — all DonFan/influencer text replaced, influencerName?creatorName, contract.influencers?contract.campaigns, import renames
+- app/dashboard/page.js  — all DonFan text replaced, influencerName?creatorName, contract.influencers?contract.campaigns, import renames
+- app/campaign/[tokenId]/page.js — all DonFan text replaced, influencerName?creatorName, contract.influencers?contract.campaigns, import renames
+- app/create-campaign/page.js — DonFan text replaced, influencerName?creatorName, dead campaignName field removed, dead useEffect removed
+- app/my-contributions/page.js — all DonFan text replaced
+- lib/contract.js        — ABI updated: influencers()?campaigns(), influencerName?creatorName, event indexed args updated
+- scripts/deploy.js      — InfluencerDonationNFT?OrganisationDonationNFT
+- components/ProgressStats.js — stray ? rupee symbol removed from milestone strings
+- package.json           — name: donfan ? onegooddeed
+- package-lock.json      — name: donfan ? onegooddeed (2 occurrences)
+- README.md              — fully rewritten for OneGoodDeed (no DonFan/influencer references)
+- DEPLOYMENT.md          — InfluencerDonationNFT?OrganisationDonationNFT, all influencer text removed
+- .gitignore             — added .env* / !.env.example, trailing slash on node_modules/, out/, consolidated
+
+## Build Result
+PASS — next build completed with exit code 0.
+All 7 pages compiled successfully (5 app routes + not-found + root).
+No TypeScript or lint errors.
+
+## Rename Check Result
+PASS — Zero DonFan/donfan references remain in .js/.ts/.json/.sol/.css files.
+PASS — Zero influencer references remain in .js/.ts/.json/.sol/.css files.
+design.md contains DonFan references only as historical migration documentation — expected and correct.

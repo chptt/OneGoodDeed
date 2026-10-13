@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import WalletConnectButton from '@/components/WalletConnectButton';
-import DonFanLogo from '@/components/DonFanLogo';
+import OneGoodDeedLogo from '@/components/OneGoodDeedLogo';
 import { getContract, CHARITY_TYPES, formatEther } from '@/lib/contract';
 
 export default function Dashboard() {
@@ -71,19 +71,19 @@ export default function Dashboard() {
 
       const tokenId = campaignIds[0];
       
-      const influencer = await contract.influencers(tokenId);
+      const campaignInfo = await contract.campaigns(tokenId);
       const owner = await contract.ownerOf(tokenId);
       
       const campaignData = {
         tokenId: tokenId.toString(),
         owner,
-        charity: CHARITY_TYPES[influencer[0]],
-        totalDonations: parseFloat(formatEther(influencer[1])),
-        goalAmount: parseFloat(formatEther(influencer[2])),
-        active: influencer[3],
-        creator: influencer[4],
-        influencerName: influencer[5] || `${owner.slice(0, 6)}...${owner.slice(-4)}`,
-        profileImageUrl: influencer[6] || ''
+        charity: CHARITY_TYPES[campaignInfo[0]],
+        totalDonations: parseFloat(formatEther(campaignInfo[1])),
+        goalAmount: parseFloat(formatEther(campaignInfo[2])),
+        active: campaignInfo[3],
+        creator: campaignInfo[4],
+        creatorName: campaignInfo[5] || `${owner.slice(0, 6)}...${owner.slice(-4)}`,
+        profileImageUrl: campaignInfo[6] || ''
       };
       
       setCampaign(campaignData);
@@ -185,9 +185,9 @@ export default function Dashboard() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <Link href="/">
               <div className="flex items-center space-x-2 cursor-pointer group">
-                <DonFanLogo size="md" className="group-hover:scale-110 transition-transform" />
+                <OneGoodDeedLogo size="md" className="group-hover:scale-110 transition-transform" />
                 <h1 className="text-2xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">
-                  DonFan
+                  OneGoodDeed
                 </h1>
               </div>
             </Link>
@@ -234,10 +234,10 @@ export default function Dashboard() {
             <Link href="/">
               <div className="flex items-center space-x-2 cursor-pointer group">
                 <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center group-hover:bg-emerald-700 transition-colors shadow-lg">
-                  <span className="text-white font-bold text-xl">D</span>
+                  <span className="text-white font-bold text-xl">O</span>
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">
-                  DonFan
+                  OneGoodDeed
                 </h1>
               </div>
             </Link>
@@ -278,10 +278,10 @@ export default function Dashboard() {
           <Link href="/">
             <div className="flex items-center space-x-2 cursor-pointer group">
               <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center group-hover:bg-emerald-700 transition-colors shadow-lg">
-                <span className="text-white font-bold text-xl">D</span>
+                <span className="text-white font-bold text-xl">O</span>
               </div>
               <h1 className="text-2xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">
-                DonFan
+                OneGoodDeed
               </h1>
             </div>
           </Link>
@@ -523,4 +523,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

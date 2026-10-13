@@ -1,0 +1,18 @@
+BUILD RESULT: PASS
+Exit code: 0
+
+Output summary:
+  ? Next.js 14.2.35
+  ? Compiled successfully
+  ? Linting and checking validity of types
+  ? Collecting page data
+  ? Generating static pages (7/7)
+  ? Collecting build traces
+  ? Finalizing page optimization
+
+Routes built:
+  / (static)
+  /campaign/[tokenId] (dynamic)
+  /create-campaign (static)
+  /dashboard (static)
+  /my-contributions (static)

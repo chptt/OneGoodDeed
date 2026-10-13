@@ -8,11 +8,11 @@ export default function ProgressStats({ totalDonations, goalAmount, charityType 
 
   const getMilestone = () => {
     if (progress >= 100) return 'Goal Achieved! 🎉';
-    if (progress >= 80) return `₹${remaining.toFixed(4)} ETH to complete the goal!`;
-    if (progress >= 60) return `₹${remaining.toFixed(4)} ETH to unlock final stage`;
-    if (progress >= 40) return `₹${remaining.toFixed(4)} ETH to reach 60%`;
-    if (progress >= 20) return `₹${remaining.toFixed(4)} ETH to reach 40%`;
-    return `₹${remaining.toFixed(4)} ETH to unlock first milestone`;
+    if (progress >= 80) return `${remaining.toFixed(4)} ETH to complete the goal!`;
+    if (progress >= 60) return `${remaining.toFixed(4)} ETH to unlock final stage`;
+    if (progress >= 40) return `${remaining.toFixed(4)} ETH to reach 60%`;
+    if (progress >= 20) return `${remaining.toFixed(4)} ETH to reach 40%`;
+    return `${remaining.toFixed(4)} ETH to unlock first milestone`;
   };
 
   const charityColors = {

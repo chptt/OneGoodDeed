@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'DonFan - Web3 Donation Platform',
-  description: 'Support your favorite influencers and their charitable causes',
+  title: 'OneGoodDeed - Transparent Donation Platform',
+  description: 'Support verified organisations and their charitable campaigns. Every donation is tracked transparently on the blockchain.',
 };
 
 export default function RootLayout({ children }) {

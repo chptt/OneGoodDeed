@@ -1,11 +1,20 @@
-node_modules
-.next
-.env.local
-.env
-out
-dist
-build
-*.log
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Hardhat artifacts and cache
+artifacts/
+cache/
+
+# Environment files — never commit secrets
+.env*
+!.env.example
+
+# OS and editor noise
 .DS_Store
-cache
-artifacts
+*.log
+dist/
+build/

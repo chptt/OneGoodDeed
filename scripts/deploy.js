@@ -1,13 +1,13 @@
 const hre = require("hardhat");
 
 async function main() {
-  console.log("Deploying InfluencerDonationNFT contract...");
+  console.log("Deploying OrganisationDonationNFT contract...");
 
   // Get the contract factory
-  const InfluencerDonationNFT = await hre.ethers.getContractFactory("InfluencerDonationNFT");
+  const OrganisationDonationNFT = await hre.ethers.getContractFactory("OrganisationDonationNFT");
   
   // Deploy the contract
-  const contract = await InfluencerDonationNFT.deploy();
+  const contract = await OrganisationDonationNFT.deploy();
   
   // Wait for deployment to finish
   await contract.waitForDeployment();
