@@ -8,43 +8,46 @@ export default function WalletConnectButton({ onConnect }) {
   const [isConnecting, setIsConnecting] = useState(false);
 
   useEffect(() => {
-    checkConnection();
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', handleAccountsChanged);
-      window.ethereum.on('chainChanged', () => window.location.reload());
-    }
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+    const handleAccountsChanged = (accounts) => {
+      if (accounts.length === 0) {
+        setAccount(null);
+      } else {
+        setAccount(accounts[0]);
+        window.location.reload();
       }
     };
-  }, []);
 
-  const checkConnection = async () => {
-    if (typeof window.ethereum !== 'undefined') {
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const accounts = await provider.listAccounts();
-        if (accounts.length > 0) {
-          const signer = await provider.getSigner();
-          const address = await signer.getAddress();
-          setAccount(address);
-          onConnect?.(provider, signer, address);
+    const checkConnection = async () => {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const accounts = await provider.listAccounts();
+          if (accounts.length > 0) {
+            const signer = await provider.getSigner();
+            const address = await signer.getAddress();
+            setAccount(address);
+            onConnect?.(provider, signer, address);
+          }
+        } catch (error) {
+          console.error('Error checking connection:', error);
         }
-      } catch (error) {
-        console.error('Error checking connection:', error);
       }
-    }
-  };
+    };
 
-  const handleAccountsChanged = (accounts) => {
-    if (accounts.length === 0) {
-      setAccount(null);
-    } else {
-      setAccount(accounts[0]);
-      window.location.reload();
+    checkConnection();
+
+    const eth = typeof window !== 'undefined' && window.ethereum;
+    if (eth && typeof eth.on === 'function') {
+      eth.on('accountsChanged', handleAccountsChanged);
+      eth.on('chainChanged', () => window.location.reload());
     }
-  };
+
+    return () => {
+      if (eth && typeof eth.removeListener === 'function') {
+        eth.removeListener('accountsChanged', handleAccountsChanged);
+      }
+    };
+  }, [onConnect]);
 
   const connectWallet = async () => {
     // Check if we're on mobile

@@ -13,6 +13,9 @@ cache/
 .env*
 !.env.example
 
+# Agent working files
+.agents/
+
 # OS and editor noise
 .DS_Store
 *.log
