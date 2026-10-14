@@ -80,10 +80,6 @@ contract OrganisationDonationNFT is ERC721, ReentrancyGuard {
         return campaigns[tokenId].totalDonations;
     }
     
-    function _exists(uint256 tokenId) internal view returns (bool) {
-        return tokenId < _tokenIdCounter;
-    }
-    
     function getTotalNFTs() external view returns (uint256) {
         return _tokenIdCounter;
     }

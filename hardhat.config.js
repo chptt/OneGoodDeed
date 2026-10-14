@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config({ path: ".env.local" });
 
 // IMPORTANT: Never commit your private key!
-// Use environment variables or a secure key management system
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL || "https://sepolia.infura.io/v3/YOUR_INFURA_KEY";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "0000000000000000000000000000000000000000000000000000000000000000";
 
